@@ -3,9 +3,9 @@ import 'dart:html';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'atthen.dart';
-import 'create_account.dart';
-import 'my_service.dart';
+import 'states/atthen.dart';
+import 'states/create_account.dart';
+import 'states/my_service.dart';
 
 final Map<String, WidgetBuilder> map = {
   '/atthen':(BuildContext context) => Atthen(),
