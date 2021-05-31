@@ -64,6 +64,7 @@ class _AtthenState extends State<Atthen> {
   Container buildLogin() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 16),
+      width: 250,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(primary: MyStyle.primary),
         onPressed: () {},
