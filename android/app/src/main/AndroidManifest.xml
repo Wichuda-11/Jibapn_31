@@ -7,6 +7,8 @@
    <application
         android:label="jibapn"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAI-Cyo4ys-WKoR_yvwbYg28x9Ajshr8gA"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

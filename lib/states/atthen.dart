@@ -10,6 +10,9 @@ class Atthen extends StatefulWidget {
 
 class _AtthenState extends State<Atthen> {
   bool redEye = true;
+  final formKey = GlobalKey<FormState>();
+  TextEditingController userController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +32,17 @@ class _AtthenState extends State<Atthen> {
           ),
           child: Center(
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  buildImage(),
-                  buildTitle(),
-                  buildUser(),
-                  buildPassword(),
-                  buildLogin(),
-                  buildCreateAccount(context),
-                ],
+              child: Form(key:  formKey,
+                child: Column(
+                  children: [
+                    buildImage(),
+                    buildTitle(),
+                    buildUser(),
+                    buildPassword(),
+                    buildLogin(),
+                    buildCreateAccount(context),
+                  ],
+                ),
               ),
             ),
           ),
@@ -67,17 +72,28 @@ class _AtthenState extends State<Atthen> {
       width: 250,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(primary: MyStyle.primary),
-        onPressed: () {},
+        onPressed: () {
+          if (formKey.currentState!.validate()) {}
+        },
         child: Text('Login'),
       ),
     );
   }
 
   Container buildUser() {
-    return Container(decoration: BoxDecoration(color: Colors.white38),
+    return Container(
+      decoration: BoxDecoration(color: Colors.white38),
       margin: EdgeInsets.only(top: 16),
       width: 250,
       child: TextFormField(
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please Fill User in Blank';
+          } else {
+            return null;
+          }
+        },
+        controller: userController,
         decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.person_outline,
@@ -92,10 +108,19 @@ class _AtthenState extends State<Atthen> {
   }
 
   Container buildPassword() {
-    return Container(decoration: BoxDecoration(color: Colors.white38),
+    return Container(
+      decoration: BoxDecoration(color: Colors.white38),
       margin: EdgeInsets.only(top: 16),
       width: 250,
       child: TextFormField(
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please Fill Password';
+          } else {
+            return null;
+          }
+        },
+        controller: passwordController,
         obscureText: redEye,
         decoration: InputDecoration(
           suffixIcon: IconButton(
