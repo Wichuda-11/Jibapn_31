@@ -9,7 +9,6 @@ final Map<String, WidgetBuilder> map = {
   '/atthen':(BuildContext context) => Atthen(),
   '/createAccount':(BuildContext context) => Createaccount(),
   '/myService':(BuildContext context) => Myservice(),
-  
 };
 
 String? keyRoute;
