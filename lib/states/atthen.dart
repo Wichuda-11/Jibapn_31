@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jibapn/model/user_model.dart';
+import 'package:jibapn/utility/dialog.dart';
 import 'package:jibapn/utility/my_style.dart';
 import 'package:jibapn/widgets/show_image.dart';
 import 'package:jibapn/widgets/show_title.dart';
@@ -32,7 +37,8 @@ class _AtthenState extends State<Atthen> {
           ),
           child: Center(
             child: SingleChildScrollView(
-              child: Form(key:  formKey,
+              child: Form(
+                key: formKey,
                 child: Column(
                   children: [
                     buildImage(),
@@ -73,11 +79,39 @@ class _AtthenState extends State<Atthen> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(primary: MyStyle.primary),
         onPressed: () {
-          if (formKey.currentState!.validate()) {}
+          if (formKey.currentState!.validate()) {
+            checkAtthen(
+                password: passwordController.text, user: userController.text);
+          }
         },
         child: Text('Login'),
       ),
     );
+  }
+
+  Future<Null> checkAtthen({String? user, String? password}) async {
+    String api =
+        'https://www.androidthai.in.th/bigc/getUserWhereUser.php?isAdd=true&user=$user';
+    await Dio().get(api).then((value) {
+      print('value = $value');
+      if (value.toString() == 'null') {
+        nomalDialog(context, 'User False', 'No $user in my Datbase');
+      } else {
+        var result = json.decode(value.data);
+        print('result = $result');
+        for (var item in result) {
+          print('item = $item');
+          UserModel model = UserModel.fromMap(item);
+          if (password == model.password) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/myService', (route) => false);
+          } else {
+            nomalDialog(context, 'password False',
+                'Please Type password Again ? Password False');
+          }
+        }
+      }
+    });
   }
 
   Container buildUser() {
